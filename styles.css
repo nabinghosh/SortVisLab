@@ -1,7 +1,7 @@
 /* Reset and general styles */
 body {
     font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-    background-color: #ffffff;
+    background-color: #f3f4f6;
     margin: 0;
     padding: 0;
     font-size: 16px;
@@ -12,10 +12,10 @@ body {
     text-align: center;
     width: 90%;
     max-width: 1000px;
-    margin: 20px auto;
+    margin: 40px auto;
     box-sizing: border-box;
     background-color: #ffffff;
-    padding: 20px;
+    padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
@@ -46,6 +46,31 @@ body {
     box-shadow: 0 4px 12px rgba(181, 234, 215, 0.4);
 }
 
+h1 {
+    font-size: 32px;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+.slider-controls {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.slider-controls label {
+    font-size: 18px;
+    font-weight: 600;
+    color: #495057;
+}
+
+.slider-controls input[type="range"] {
+    margin-left: 10px;
+    width: 200px;
+}
+
 /* Array container styles */
 .array-container {
     position: relative;
@@ -58,6 +83,8 @@ body {
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
+
+
 
 .y-axis {
     position: absolute;
@@ -162,6 +189,21 @@ body {
     font-weight: 600;
 }
 
+.sorted-array{
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.sorted-array h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #495057;
+    font-weight: 600;
+}
+
 /* Bar states with modern shadows */
 .bar.sorted {
     background-color: #B5EAD7;
@@ -227,4 +269,16 @@ body {
         padding: 8px 12px;
         font-size: 12px;
     }
+}
+
+.bar.compare {
+    background-color: #FFB7B2; /* Light red for comparisons */
+    box-shadow: 0 2px 8px rgba(255, 183, 178, 0.6);
+}
+.bar.swap {
+    background-color: #B5EAD7; /* Light green for swaps */
+    box-shadow: 0 2px 8px rgba(181, 234, 215, 0.6);
+}
+.bar.final {
+    background-color: #95d4bc; /* Darker green when sorting is done */
 }

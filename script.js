@@ -1,38 +1,39 @@
-let array = []; // Array to be sorted
-let animationSpeed = 10; // Speed of animation in milliseconds, default value
+let array = []; 
+let animationSpeed = 10;
 let comparisons = 0;
 let swaps = 0;
-let sorted = false; // Flag to track if array is sorted
+let sorted = false;
+const arrayContainer = document.getElementById('arrayContainer');
+const originalArrayContainer = document.getElementById('originalArray');
+const sortedArrayContainer = document.getElementById('sortedArray');    
 
-// Function to handle slider change
+function reverseArray() {
+    array.reverse(); // Reverse the array in place
+    displayArray(array); // Update the displayed array to show reversed order
+    displayOriginalArray(array); // Optionally update the "Original Array" display
+}
+
+// Event listener for speed slider
 document.getElementById('speedSlider').addEventListener('input', function() {
-    animationSpeed = 110 - this.value; // Adjust animation speed inversely with slider value (higher value means slower animation)
+    animationSpeed = 110 - this.value;
 });
 
-// Function to generate a new random array
-function generateArray() {
-    const arraySize = 20; // Size of the array
-    array = [];
-    resetCounters(); // Reset counters when generating new array
+// Event listener for array size slider
+document.getElementById('sizeSlider').addEventListener('input', function() {
+    generateArray(parseInt(this.value));
+});
 
-    // Clear sorted array display
-    displaySortedArray([]);
-
-    // Clear existing array bars and display original array
-    const arrayContainer = document.getElementById('arrayContainer');
-    arrayContainer.innerHTML = '';
-
-    for (let i = 0; i < arraySize; i++) {
-        array.push({
-            value: Math.floor(Math.random() * 300) + 5, // Random values between 5 and 300
-            id: i // Add ID to track original order
-        });
-    }
-
+// Generate a random array
+function generateArray(size = 20) {
+    array = Array.from({ length: size }, (_, i) => ({
+        value: Math.floor(Math.random() * 300) + 5,
+        id: i
+    }));
+    
+    resetCounters();
     displayOriginalArray(array);
     displayArray(array);
-
-    // Reset counters display
+    displaySortedArray([]);
     updateStepCount();
 }
 
@@ -42,14 +43,9 @@ function displayOriginalArray(arr) {
     originalArrayContainer.innerHTML = arr.map(item => `<span class="original-value">${item.value}</span>`).join(' ');
 }
 
-// Function to display the array as bars
-// Function to display array bars and Y-axis
-// Function to display array bars and Y-axis
-function displayArray(arr) {
-    const arrayContainer = document.getElementById('arrayContainer');
-    arrayContainer.innerHTML = ''; // Clear existing content
 
-    // Calculate maximum value in the array
+function displayArray(arr) {
+    arrayContainer.innerHTML = ''; 
     const maxVal = Math.max(...arr.map(item => item.value));
 
     // Create Y-axis container
@@ -58,7 +54,7 @@ function displayArray(arr) {
     arrayContainer.appendChild(yAxis);
 
     // Add Y-axis labels
-    const yAxisStep = Math.ceil((maxVal) / 4); // Adjust steps as needed
+    const yAxisStep = Math.ceil(maxVal/3 );
     for (let i = 0; i <= maxVal; i += yAxisStep) {
         const yAxisLabel = document.createElement('div');
         yAxisLabel.classList.add('y-axis-label');
@@ -66,24 +62,27 @@ function displayArray(arr) {
         yAxis.appendChild(yAxisLabel);
     }
 
-    // Add array bars with corresponding heights
-    for (let i = 0; i < arr.length; i++) {
+    // Add array bars with initial heights and values
+    arr.forEach((item, index) => {
         const barContainer = document.createElement('div');
         barContainer.classList.add('bar-container');
 
         const bar = document.createElement('div');
         bar.classList.add('bar');
-        bar.style.height = `${arr[i].value}px`; // Set height based on array value
+        bar.style.height = `${item.value}px`; // Set initial height based on array value
+        bar.dataset.index = index; // Store the index to identify bars during swaps
         barContainer.appendChild(bar);
 
+        // Value below each bar (X-axis labels)
         const valueDiv = document.createElement('div');
         valueDiv.classList.add('value-below');
-        valueDiv.textContent = arr[i].value; // Display value below the bar
+        valueDiv.textContent = item.value; // Set initial value label
         barContainer.appendChild(valueDiv);
 
         arrayContainer.appendChild(barContainer);
-    }
+    });
 }
+
 
 // Sorting algorithms
 
@@ -369,43 +368,6 @@ async function heapify(arr, n, i) {
     updateStepCount(); // Update step count after each heapify operation
 }
 
-// Cyclic Sort
-async function cyclicSort(arr) {
-    let i = 0;
-    comparisons = 0;
-    swaps = 0;
-
-    while (i < arr.length) {
-        let correctIndex = arr[i].value - 1;
-
-        // Ensure values are within the correct range (1 to n)
-        if (arr[i].value >= 1 && arr[i].value <= arr.length && arr[i].value !== arr[correctIndex].value) {
-            // Visualize comparison
-            visualizeComparison(i, correctIndex);
-            await sleep(animationSpeed);
-
-            comparisons++;
-            updateStepCount();
-
-            // Swap elements
-            [arr[i], arr[correctIndex]] = [arr[correctIndex], arr[i]];
-            swaps++;
-            updateStepCount();
-
-            // Visualize swap
-            visualizeSwap(i, correctIndex);
-            await sleep(animationSpeed);
-
-            // After swap, re-check current position
-            i--;
-        }
-
-        i++; // Move to the next element in the array
-    }
-
-    updateStepCount(); // Final update for the counters after sorting
-}
-
 // Radix Sort
 async function radixSort(arr) {
     let maxDigitCount = getMaxDigitCount(arr);
@@ -454,42 +416,48 @@ function getDigit(num, place) {
     return Math.floor(Math.abs(num) / Math.pow(10, place)) % 10;
 }
 
-// Helper functions
 
-// Function to visualize comparison between two bars
-function visualizeComparison(idx1, idx2) {
-    const bars = document.querySelectorAll('.bar');
-    bars[idx1].style.backgroundColor = '#FF9AA2'; // Red color for comparison
-    bars[idx2].style.backgroundColor = '#FFB7B2'; // Red color for comparison
-    comparisons++;
+function updateStepCount() {
+    document.getElementById('comparisonCount').textContent = comparisons;
+    document.getElementById('swapCount').textContent = swaps;
 }
 
-// Function to visualize swap between two bars
+function visualizeComparison(idx1, idx2) {      
+    const bars = document.querySelectorAll('.bar');
+    bars[idx1].classList.add('compare');
+    bars[idx2].classList.add('compare');
+    setTimeout(() => {
+        bars[idx1].classList.remove('compare');
+        bars[idx2].classList.remove('compare');
+    }, animationSpeed);
+    comparisons++;
+    updateStepCount();
+}
+
 async function visualizeSwap(idx1, idx2) {
     const bars = document.querySelectorAll('.bar');
-    const bar1Height = bars[idx1].style.height;
-    const bar1ClassList = bars[idx1].classList;
-    const bar2Height = bars[idx2].style.height;
-    const bar2ClassList = bars[idx2].classList;
+    const valuesBelow = document.querySelectorAll('.value-below');
 
-    bars[idx1].style.height = bar2Height;
-    bars[idx1].classList = bar2ClassList;
+    // Swap the heights of the bars
+    [bars[idx1].style.height, bars[idx2].style.height] = [bars[idx2].style.height, bars[idx1].style.height];
 
-    bars[idx2].style.height = bar1Height;
-    bars[idx2].classList = bar1ClassList;
+    // Update the displayed values below the bars to match the swap
+    [valuesBelow[idx1].textContent, valuesBelow[idx2].textContent] = [valuesBelow[idx2].textContent, valuesBelow[idx1].textContent];
 
-    // Highlight swapped bars
-    bars[idx1].style.backgroundColor = '#B5EAD7'; // Green color for swapped bar
-    bars[idx2].style.backgroundColor = '#E2F0CB'; // Green color for swapped bar
-
-    swaps++;
-
+    bars[idx1].classList.add('swap');
+    bars[idx2].classList.add('swap');
     await sleep(animationSpeed);
-
-    // Reset color after highlighting
-    bars[idx1].style.backgroundColor = '#C7CEEA'; // Blue color after swap
-    bars[idx2].style.backgroundColor = '#C6DEF1'; // Blue color after swap
+    bars[idx1].classList.remove('swap');
+    bars[idx2].classList.remove('swap');
+    swaps++;
+    updateStepCount();
 }
+
+
+function markSorted() {
+    document.querySelectorAll('.bar').forEach(bar => bar.classList.add('final'));
+}
+
 
 // Function for sleep (delay)
 function sleep(ms) {
@@ -498,40 +466,16 @@ function sleep(ms) {
 
 // Function to update complexity display
 function updateComplexityDisplay(algorithm) {
-    const complexityDisplay = document.getElementById('complexityDisplay');
-    let complexityText = '';
-
-    switch (algorithm) {
-        case 'bubble':
-            complexityText = `Bubble Sort\n\nTime Complexity:\n- Best: O(n)\n- Average: O(n^2)\n- Worst: O(n^2)\n\nSpace Complexity:\n- O(1)`;
-            break;
-        case 'insertion':
-            complexityText = `Insertion Sort\n\nTime Complexity:\n- Best: O(n)\n- Average: O(n^2)\n- Worst: O(n^2)\n\nSpace Complexity:\n- O(1)`;
-            break;
-        case 'selection':
-            complexityText = `Selection Sort\n\nTime Complexity:\n- Best: O(n^2)\n- Average: O(n^2)\n- Worst: O(n^2)\n\nSpace Complexity:\n- O(1)`;
-            break;
-        case 'merge':
-            complexityText = `Merge Sort\n\nTime Complexity:\n- Best: O(n log n)\n- Average: O(n log n)\n- Worst: O(n log n)\n\nSpace Complexity:\n- O(n)`;
-            break;
-        case 'quick':
-            complexityText = `Quick Sort\n\nTime Complexity:\n- Best: O(n log n)\n- Average: O(n log n)\n- Worst: O(n^2)\n\nSpace Complexity:\n- O(log n)`;
-            break;
-        case 'heap':
-            complexityText = `Heap Sort\n\nTime Complexity:\n- Best: O(n log n)\n- Average: O(n log n)\n- Worst: O(n log n)\n\nSpace Complexity:\n- O(1)`;
-            break;
-        case 'cyclic':
-            complexityText = `Cyclic Sort\n\nTime Complexity:\n- Best: O(n)\n- Average: O(n)\n- Worst: O(n)\n\nSpace Complexity:\n- O(1)`;
-            break;
-        case 'radix':
-            complexityText = `Radix Sort\n\nTime Complexity:\n- Best: O(nk)\n- Average: O(nk)\n- Worst: O(nk)\n\nSpace Complexity:\n- O(n+k)`;
-            break;
-        default:
-            complexityText = '';
-    }
-
-
-    complexityDisplay.textContent = complexityText;
+    const complexities = {
+        bubble: `Bubble Sort\n\nTime Complexity:\n- Best: O(n)\n- Average: O(n^2)\n- Worst: O(n^2)\n\nSpace Complexity:\n- O(1)`,
+        insertion: `Insertion Sort\n\nTime Complexity:\n- Best: O(n)\n- Average: O(n^2)\n- Worst: O(n^2)\n\nSpace Complexity:\n- O(1)`,
+        selection: `Selection Sort\n\nTime Complexity:\n- Best: O(n^2)\n- Average: O(n^2)\n- Worst: O(n^2)\n\nSpace Complexity:\n- O(1)`,
+        merge: `Merge Sort\n\nTime Complexity:\n- Best: O(n log n)\n- Average: O(n log n)\n- Worst: O(n log n)\n\nSpace Complexity:\n- O(n)`,
+        quick: `Quick Sort\n\nTime Complexity:\n- Best: O(n log n)\n- Average: O(n log n)\n- Worst: O(n^2)\n\nSpace Complexity:\n- O(log n)`,
+        heap: `Heap Sort\n\nTime Complexity:\n- Best: O(n log n)\n- Average: O(n log n)\n- Worst: O(n log n)\n\nSpace Complexity:\n- O(1)`,
+        radix: `Radix Sort\n\nTime Complexity:\n- Best: O(nk)\n- Average: O(nk)\n- Worst: O(nk)\n\nSpace Complexity:\n- O(n+k)`
+    };
+    document.getElementById('complexityDisplay').textContent = complexities[algorithm] || '';
 }
 
 function displaySortedArray(arr) {
@@ -553,64 +497,30 @@ function resetCounters() {
 
 // Function to sort array based on selected algorithm
 async function sortArray(algorithm) {
-    let sortFunction;
-    switch (algorithm) {
-        case 'bubble':
-            sortFunction = bubbleSort;
-            break;
-        case 'insertion':
-            sortFunction = insertionSort;
-            break;
-        case 'selection':
-            sortFunction = selectionSort;
-            break;
-        case 'merge':
-            sortFunction = mergeSort;
-            break;
-        case 'quick':
-            sortFunction = quickSort;
-            break;
-        case 'heap':
-            sortFunction = heapSort;
-            break;
-        case 'cyclic':
-            sortFunction = cyclicSort;
-            break;
-        case 'radix':
-            sortFunction = radixSort;
-            break;
-        default:
-            return;
-    }
+    const algorithms = {
+        bubble: bubbleSort,
+        insertion: insertionSort,
+        selection: selectionSort,
+        merge: mergeSort,
+        quick: quickSort,
+        heap: heapSort,
+        radix: radixSort
+    };
+    const sortFunction = algorithms[algorithm];
+    if (!sortFunction) return;
 
-    resetCounters(); // Reset counters before sorting
-    updateStepCount(); // Update step count display before sorting
-
-    // Update complexity display
+    resetCounters();
+    updateStepCount();
     updateComplexityDisplay(algorithm);
-
-    // Disable sorting buttons during sorting
+    
     const sortButtons = document.querySelectorAll('.controls button');
-    sortButtons.forEach(button => {
-        button.disabled = true;
-    });
+    sortButtons.forEach(button => button.disabled = true);
 
-    // Sort the array using selected algorithm
     await sortFunction(array);
 
-    // Display the sorted array
     displaySortedArray(array);
-
-    // Enable sorting buttons after sorting
-    sortButtons.forEach(button => {
-        button.disabled = false;
-    });
-
-    sorted = true; // Set sorted flag to true after sorting
-
-    // Enable generate array button after sorting
-    const generateButton = document.getElementById('generateButton');
-    generateButton.disabled = false;
+    sortButtons.forEach(button => button.disabled = false);
+    markSorted();
 }
 
 // Event listener for Generate New Array button

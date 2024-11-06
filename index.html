@@ -9,45 +9,67 @@
 <body>
     <div class="container">
         <h1>Sorting Visualizer</h1>
-        <input type="range" id="speedSlider" min="10" max="1000" value="100" class="slider">
-        <label for="speedSlider">Animation Speed</label>
-        <div class="controls">
-            <button id="generateButton" onclick="generateArray()">Generate New Array</button>
-            <button onclick="sortArray('bubble')">Bubble Sort</button>
-            <button onclick="sortArray('insertion')">Insertion Sort</button>
-            <button onclick="sortArray('selection')">Selection Sort</button>
-            <button onclick="sortArray('merge')">Merge Sort</button>
-            <button onclick="sortArray('quick')">Quick Sort</button>
-            <button onclick="sortArray('heap')">Heap Sort</button>
-            <button onclick="sortArray('cyclic')">Cyclic Sort</button>
-            <button onclick="sortArray('radix')">Radix Sort</button>
+
+        <!-- Slider controls -->
+        <div class="slider-controls">
+            <label for="speedSlider">Animation Speed</label>
+            <input type="range" id="speedSlider" min="10" max="1000" value="100" class="slider">
+            <label for="sizeSlider">Array Size</label>
+            <input type="range" id="sizeSlider" min="5" max="21" value="15" class="slider">
         </div>
-        
-        <div class="original-array">
-            <h2>Original Array</h2>
-            <div id="originalArray"></div>
-        </div>            
-        <div class="array-container" id="arrayContainer">
-            <!-- Array bars displayed here -->
-            <div class="y-axis" id="yAxis">
-                <!-- Y-axis labels dynamically added here -->
+
+        <!-- Control buttons for generating and reversing arrays -->
+        <div class="controls">
+            <div class="operations">
+                <button id="generateButton" onclick="generateArray()">Generate New Array</button>
+                <button onclick="reverseArray()">Reverse Array</button>
+            </div>
+            
+            <!-- Algorithm buttons -->
+            <div class="algorithms">
+                <button onclick="sortArray('bubble')">Bubble Sort</button>
+                <button onclick="sortArray('insertion')">Insertion Sort</button>
+                <button onclick="sortArray('selection')">Selection Sort</button>
+                <button onclick="sortArray('merge')">Merge Sort</button>
+                <button onclick="sortArray('quick')">Quick Sort</button>
+                <button onclick="sortArray('heap')">Heap Sort</button>
+                <button onclick="sortArray('radix')">Radix Sort</button>
             </div>
         </div>
-        <div id="sortedArrayContainer">
-            <h2>Sorted Array</h2>
-            <div id="sortedArray"></div>
+
+        <!-- Display Original and Sorted arrays -->
+        <div class="array-sections">
+            <div class="original-array">
+                <h2>Original Array</h2>
+                <div id="originalArray"></div>
+            </div>
+
+            <div class="array-container" id="arrayContainer">
+                <!-- Array bars displayed here -->
+                <div class="y-axis" id="yAxis"></div>
+            </div>
+
+            <div id="sorted-array">
+                <h2>Sorted Array</h2>
+                <div id="sortedArray"></div>
+            </div>
         </div>
-        <div id="stepCount">
-            <p>Comparisons: <span id="comparisonCount">0</span></p>
-            <p>Swaps: <span id="swapCount">0</span></p>
-        </div>        
+
+        <!-- Sorting details and complexities -->
+        <div class="details">
+            <div id="stepCount">
+                <p>Comparisons: <span id="comparisonCount">0</span></p>
+                <p>Swaps: <span id="swapCount">0</span></p>
+            </div>
+        </div>
+
+        <!-- Complexity section -->
         <div class="complexity">
             <h2>Time and Space Complexity</h2>
-            <div id="complexityDisplay">
-                <!-- Complexity information will be displayed here -->
-            </div>
+            <div id="complexityDisplay"></div>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
