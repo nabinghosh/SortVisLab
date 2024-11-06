@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Sorting Visualizer</h1>
+        <input type="range" id="speedSlider" min="10" max="1000" value="100" class="slider">
+        <label for="speedSlider">Animation Speed</label>
+        <div class="controls">
+            <button id="generateButton" onclick="generateArray()">Generate New Array</button>
+            <button onclick="sortArray('bubble')">Bubble Sort</button>
+            <button onclick="sortArray('insertion')">Insertion Sort</button>
+            <button onclick="sortArray('selection')">Selection Sort</button>
+            <button onclick="sortArray('merge')">Merge Sort</button>
+            <button onclick="sortArray('quick')">Quick Sort</button>
+            <button onclick="sortArray('heap')">Heap Sort</button>
+            <button onclick="sortArray('cyclic')">Cyclic Sort</button>
+            <button onclick="sortArray('radix')">Radix Sort</button>
+        </div>
+        
+        <div class="original-array">
+            <h2>Original Array</h2>
+            <div id="originalArray"></div>
+        </div>            
+        <div class="array-container" id="arrayContainer">
+            <!-- Array bars displayed here -->
+            <div class="y-axis" id="yAxis">
+                <!-- Y-axis labels dynamically added here -->
+            </div>
+        </div>
+        <div id="sortedArrayContainer">
+            <h2>Sorted Array</h2>
+            <div id="sortedArray"></div>
+        </div>
+        <div id="stepCount">
+            <p>Comparisons: <span id="comparisonCount">0</span></p>
+            <p>Swaps: <span id="swapCount">0</span></p>
+        </div>        
+        <div class="complexity">
+            <h2>Time and Space Complexity</h2>
+            <div id="complexityDisplay">
+                <!-- Complexity information will be displayed here -->
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

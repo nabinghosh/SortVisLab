@@ -1,0 +1,230 @@
+/* Reset and general styles */
+body {
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+}
+
+/* Container styles */
+.container {
+    text-align: center;
+    width: 90%;
+    max-width: 1000px;
+    margin: 20px auto;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Controls styles */
+.controls {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.controls button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 14px;
+    background-color: #B5EAD7;
+    color: #2c584a;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.controls button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(181, 234, 215, 0.4);
+}
+
+/* Array container styles */
+.array-container {
+    position: relative;
+    width: 90%;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 25px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.y-axis {
+    position: absolute;
+    left: -20px;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-right: 5px;
+}
+
+.y-axis-label {
+    font-size: 12px;
+    color: #495057;
+}
+
+.bar {
+    position: relative;
+    width: 25px;
+    margin: 0 2px;
+    background-color: #C7CEEA;
+    display: inline-block;
+    vertical-align: bottom;
+    border-radius: 4px 4px 0 0;
+    transition: all 0.3s ease;
+}
+
+.bar-value {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: #495057;
+    font-weight: 500;
+}
+
+.bar-container {
+    position: relative;
+    display: inline-block;
+    margin: 0 3px;
+}
+
+.value-below {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: #495057;
+    margin-top: 5px;
+}
+
+/* Animation for sorting */
+.bar-swap {
+    transition: all 0.3s ease;
+}
+
+/* Complexity display styles */
+.complexity {
+    text-align: left;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.complexity h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #495057;
+    font-weight: 600;
+}
+
+#complexityDisplay {
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    font-size: 14px;
+    white-space: pre-line;
+    max-height: 200px;
+    overflow-y: auto;
+    color: #495057;
+    line-height: 1.6;
+}
+
+/* Original array styles */
+.original-array {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.original-array h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #495057;
+    font-weight: 600;
+}
+
+/* Bar states with modern shadows */
+.bar.sorted {
+    background-color: #B5EAD7;
+    box-shadow: 0 2px 8px rgba(181, 234, 215, 0.4);
+}
+
+.bar.iterated {
+    background-color: #FFB7B2;
+    box-shadow: 0 2px 8px rgba(255, 183, 178, 0.4);
+}
+
+.bar.unsorted {
+    background-color: #C7CEEA;
+    box-shadow: 0 2px 8px rgba(199, 206, 234, 0.4);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #B5EAD7;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #95d4bc;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    .array-container {
+        width: 95%;
+        height: auto;
+        padding: 15px;
+    }
+
+    .y-axis {
+        left: -10px;
+        padding-right: 2px;
+    }
+
+    .bar {
+        width: 12px;
+        margin: 0 1px;
+    }
+
+    .bar-value,
+    .value-below {
+        font-size: 9px;
+    }
+
+    .controls button {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+}
