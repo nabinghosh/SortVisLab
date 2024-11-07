@@ -467,14 +467,149 @@ function sleep(ms) {
 // Function to update complexity display
 function updateComplexityDisplay(algorithm) {
     const complexities = {
-        bubble: `Bubble Sort\n\nTime Complexity:\n- Best: O(n)\n- Average: O(n^2)\n- Worst: O(n^2)\n\nSpace Complexity:\n- O(1)`,
-        insertion: `Insertion Sort\n\nTime Complexity:\n- Best: O(n)\n- Average: O(n^2)\n- Worst: O(n^2)\n\nSpace Complexity:\n- O(1)`,
-        selection: `Selection Sort\n\nTime Complexity:\n- Best: O(n^2)\n- Average: O(n^2)\n- Worst: O(n^2)\n\nSpace Complexity:\n- O(1)`,
-        merge: `Merge Sort\n\nTime Complexity:\n- Best: O(n log n)\n- Average: O(n log n)\n- Worst: O(n log n)\n\nSpace Complexity:\n- O(n)`,
-        quick: `Quick Sort\n\nTime Complexity:\n- Best: O(n log n)\n- Average: O(n log n)\n- Worst: O(n^2)\n\nSpace Complexity:\n- O(log n)`,
-        heap: `Heap Sort\n\nTime Complexity:\n- Best: O(n log n)\n- Average: O(n log n)\n- Worst: O(n log n)\n\nSpace Complexity:\n- O(1)`,
-        radix: `Radix Sort\n\nTime Complexity:\n- Best: O(nk)\n- Average: O(nk)\n- Worst: O(nk)\n\nSpace Complexity:\n- O(n+k)`
+        bubble: `Bubble Sort
+    
+    Time Complexity:
+    - Best: O(n)
+    - Average: O(n^2)
+    - Worst: O(n^2)
+    
+    Space Complexity:
+    - O(1)
+    
+    Advantages:
+    - Simple to implement.
+    - Efficient for small datasets.
+    
+    Disadvantages:
+    - Inefficient for large datasets.
+    - Time complexity can be high in the worst case (O(n^2)).
+    
+    Stable: Yes`,
+    
+        insertion: `Insertion Sort
+    
+    Time Complexity:
+    - Best: O(n)
+    - Average: O(n^2)
+    - Worst: O(n^2)
+    
+    Space Complexity:
+    - O(1)
+    
+    Advantages:
+    - Efficient for small datasets or nearly sorted arrays.
+    - Adaptive: performs well when the input is mostly sorted.
+    
+    Disadvantages:
+    - Inefficient on large datasets.
+    - Time complexity can be high in the worst case (O(n^2)).
+    
+    Stable: Yes`,
+    
+        selection: `Selection Sort
+    
+    Time Complexity:
+    - Best: O(n^2)
+    - Average: O(n^2)
+    - Worst: O(n^2)
+    
+    Space Complexity:
+    - O(1)
+    
+    Advantages:
+    - Simple to implement.
+    - In-place sorting algorithm.
+    
+    Disadvantages:
+    - Inefficient for large datasets.
+    - Time complexity is consistently O(n^2) in all cases.
+    
+    Stable: No`,
+    
+        merge: `Merge Sort
+    
+    Time Complexity:
+    - Best: O(n log n)
+    - Average: O(n log n)
+    - Worst: O(n log n)
+    
+    Space Complexity:
+    - O(n)
+    
+    Advantages:
+    - Consistent O(n log n) time complexity.
+    - Efficient for large datasets.
+    - Stable sorting algorithm.
+    
+    Disadvantages:
+    - Requires additional space (O(n)).
+    - Not an in-place algorithm.
+    
+    Stable: Yes`,
+    
+        quick: `Quick Sort
+    
+    Time Complexity:
+    - Best: O(n log n)
+    - Average: O(n log n)
+    - Worst: O(n^2)
+    
+    Space Complexity:
+    - O(log n)
+    
+    Advantages:
+    - Very fast on average (O(n log n)).
+    - Efficient for large datasets.
+    
+    Disadvantages:
+    - Worst-case time complexity can be O(n^2) if the pivot selection is poor.
+    - Not a stable sorting algorithm.
+    
+    Stable: No`,
+    
+        heap: `Heap Sort
+    
+    Time Complexity:
+    - Best: O(n log n)
+    - Average: O(n log n)
+    - Worst: O(n log n)
+    
+    Space Complexity:
+    - O(1)
+    
+    Advantages:
+    - Efficient for large datasets.
+    - In-place sorting algorithm.
+    - Time complexity is consistently O(n log n).
+    
+    Disadvantages:
+    - Not a stable sorting algorithm.
+    - Less efficient than merge sort in practical applications.
+    
+    Stable: No`,
+    
+        radix: `Radix Sort
+    
+    Time Complexity:
+    - Best: O(nk)
+    - Average: O(nk)
+    - Worst: O(nk)
+    
+    Space Complexity:
+    - O(n + k)
+    
+    Advantages:
+    - Can be faster than comparison-based sorting algorithms for large datasets.
+    - Stable sorting algorithm.
+    
+    Disadvantages:
+    - Requires extra space (O(n + k)).
+    - Not suitable for all types of data (works best with integers or strings).
+    
+    Stable: Yes`
     };
+    
     document.getElementById('complexityDisplay').textContent = complexities[algorithm] || '';
 }
 
