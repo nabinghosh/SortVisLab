@@ -27,7 +27,10 @@ Here's a video demonstration of the Sorting Visualizer in action:
 ## Supported Algorithms
 
 - Bubble Sort
-- (Add other algorithms as you implement them)
+- Selection Sort
+- Insertion Sort
+- Quick Sort
+- Merge Sort
 
 ## Technologies Used
 
