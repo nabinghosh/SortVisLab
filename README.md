@@ -16,6 +16,13 @@ Here's a video demonstration of the Sorting Visualizer in action:
 
 ![Sorting Visualizer Demo](./sorting_visualizer_demo.mp4)
 
+Incase video takes time to load here is a pic
+![Sorting Visualizer Demo](./image.png)
+![Sorting Visualizer Demo](./image2.png)
+![Sorting Visualizer Demo](./image3.png)
+![Sorting Visualizer Demo](./image4.png)
+
+
 ## How to Use
 
 1. Open `index.html` in your web browser
